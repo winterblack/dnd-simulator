@@ -7,7 +7,7 @@ end
 
 class Simulation
   def run
-    Trial.new(scenario).run(party)
+    Trial.new(scenario).run(party).print_outcome
   end
 
   private
