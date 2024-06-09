@@ -1,0 +1,124 @@
+# simple weapons
+
+club:
+  damage: 1d4
+
+dagger:
+  damage: 1d4
+  finesse: true
+
+greatclub:
+  damage: 1d8
+
+handaxe:
+  damage: 1d6
+
+javelin:
+  damage: 1d6
+
+light hammer:
+  damage: 1d4
+
+mace:
+  damage: 1d6
+
+quarterstaff:
+  damage: 1d6
+
+sickle:
+  damage: 1d4
+
+spear:
+  damage: 1d6
+
+light crossbow:
+  damage: 1d8
+  ranged: true
+
+dart:
+  damage: 1d4
+  ranged: true
+
+shortbow:
+  damage: 1d6
+  ranged: true
+
+sling:
+  damage: 1d4
+  ranged: true
+
+# martial weapons
+
+battleaxe:
+  damage: 1d8
+
+flail:
+  damage: 1d8
+
+glaive:
+  damage: 1d10
+
+greataxe:
+  damage: 1d12
+
+greatsword:
+  damage: 2d6
+
+halberd:
+  damage: 1d10
+
+lance:
+  damage: 1d12
+
+longsword:
+  damage: 1d8
+
+maul:
+  damage: 2d6
+
+morningstar:
+  damage: 1d8
+
+pike:
+  damage: 1d10
+
+rapier:
+  damage: 1d8
+  finesse: true
+
+scimitar:
+  damage: 1d6
+  finesse: true
+
+shortsword:
+  damage: 1d6
+  finesse: true
+
+trident:
+  damage: 1d6
+
+war pick:
+  damage: 1d8
+
+warhammer:
+  damage: 1d8
+
+whip:
+  damage: 1d4
+  finesse: true
+
+blowgun:
+  damage: 1d1
+  ranged: true
+
+hand crossbow:
+  damage: 1d6
+  ranged: true
+
+heavy crossbow:
+  damage: 1d10
+  ranged: true
+
+longbow:
+  damage: 1d8
+  ranged: true
