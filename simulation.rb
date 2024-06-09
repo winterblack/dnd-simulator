@@ -1,5 +1,28 @@
-def run
-  p "Welcome to my Dungeons & Dragons simulator"
+require_relative 'encounter'
+require_relative 'trial'
+
+def run_simulation
+  Simulation.new.run
 end
 
-run if __FILE__ == $PROGRAM_NAME
+class Simulation
+  def run
+    Trial.new(scenario).run(party)
+  end
+
+  private
+
+  def party
+    ['cleric', 'fighter', 'rogue', 'wizard']
+  end
+
+  def monsters
+    Array.new(8) { 'kobold' }
+  end
+
+  def scenario
+    Encounter.new(monsters)
+  end
+end
+
+run_simulation if __FILE__ == $PROGRAM_NAME
