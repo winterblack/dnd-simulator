@@ -49,6 +49,6 @@ class Trial
   end
 
   def start_trial i
-    print "\nStarting trial #{i + 1}\n\n"
+    print "\nStarting trial #{i + 1}\n\n" if $VERBOSE
   end
 end

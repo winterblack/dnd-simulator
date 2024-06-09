@@ -1,8 +1,12 @@
 module AttackLogs
   private
 
+  def log message
+    p message if $VERBOSE
+  end
+
   def miss
-    p "#{attacker} misses #{defender} with #{name}"
+    log "#{attacker} misses #{defender} with #{name}"
   end
 
   def roll_damage
@@ -11,7 +15,7 @@ module AttackLogs
 
   def hit
     super
-    p "#{attacker} hits #{defender} with #{name} for #{@damage} damage"
+    log "#{attacker} hits #{defender} with #{name} for #{@damage} damage"
   end
 
   def name

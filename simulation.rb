@@ -1,11 +1,12 @@
 require_relative 'encounter'
+require_relative 'options'
 require_relative 'trial'
 
-def run_simulation
-  Simulation.new.run
-end
-
 class Simulation
+  def initialize
+    Options.new
+  end
+
   def run
     Trial.new(scenario).run(party).print_outcome
   end
@@ -25,4 +26,4 @@ class Simulation
   end
 end
 
-run_simulation if __FILE__ == $PROGRAM_NAME
+Simulation.new.run if __FILE__ == $PROGRAM_NAME
