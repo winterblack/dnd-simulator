@@ -1,0 +1,12 @@
+kobold:
+  ac: 12
+  hp: 5
+  speed: 30
+  str: 7
+  dex: 15
+  con: 9
+  int: 8
+  wis: 7
+  cha: 8
+  challenge: 1/8
+  weapon: dagger
