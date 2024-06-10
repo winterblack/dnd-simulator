@@ -18,7 +18,7 @@ class Attack < Action
     damage_dice.average
   end
 
-  def evalaute_damage
+  def evaluate_damage
     [average_damage / target.current_hp, 1].min
   end
 
@@ -28,7 +28,7 @@ class Attack < Action
 
   def evaluate_target target
     @target = target
-    hit_chance * evalaute_damage
+    hit_chance * evaluate_damage
   end
 
   def damage_dice

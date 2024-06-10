@@ -1,15 +1,18 @@
+require_relative '../actions/dash'
+require_relative '../actions/move'
 require_relative '../actions/weapon'
 require_relative '../dice'
 require_relative 'attribute'
+require_relative 'positioning'
 
 class Character
+  include Positioning
   attr_accessor :foes
   attr_reader :str, :dex, :con, :int, :wis, :cha,
               :ac, :hp, :level, :name, :speed, :weapon,
-              :current_hp, :dead, :initiative, :proficiency_bonus
+              :current_hp, :dead, :initiative, :position, :proficiency_bonus
 
-  def initialize character, name = nil
-    @name = name || character['name']
+  def initialize character
     @str = Attribute.new character['str']
     @dex = Attribute.new character['dex']
     @con = Attribute.new character['con']
@@ -39,15 +42,21 @@ class Character
 
   private
 
+  def living_foes
+    foes.reject(&:dead)
+  end
+
   def actions
-    [weapon]
+    dash = Dash.new self
+    move_attack = weapon.dup.extend Move
+    [dash, move_attack, weapon]
   end
 
   def choose_action
-    actions.select(&:valid?).max_by(&:evalaute)
+    actions.select(&:valid?).max_by(&:evaluate)
   end
 
   def inspect
-    "<#{name} ac:#{ac} hp:#{hp} #{weapon}>"
+    "<#{name} ac:#{ac} hp:#{current_hp}/#{hp}>"
   end
 end

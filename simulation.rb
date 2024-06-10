@@ -3,8 +3,11 @@ require_relative 'options'
 require_relative 'trial'
 
 class Simulation
+  attr_reader :encounter_options
+
   def initialize
-    Options.new
+    options = Options.new
+    @encounter_options = options.encounter_options
   end
 
   def run
@@ -22,7 +25,7 @@ class Simulation
   end
 
   def scenario
-    Encounter.new(monsters)
+    Encounter.new(monsters, encounter_options)
   end
 end
 

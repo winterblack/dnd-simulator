@@ -1,5 +1,5 @@
 require 'yaml'
-require_relative 'characters/character'
+require_relative 'characters/player_character'
 
 class Trial
   attr_reader :count, :outcomes, :party, :scenario
@@ -44,7 +44,7 @@ class Trial
 
   def renew_party
     party.map do |character|
-      Character.new(Characters[character])
+      PlayerCharacter.new(Characters[character])
     end
   end
 

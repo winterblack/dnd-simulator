@@ -15,6 +15,7 @@ class Weapon < Attack
     @damage_dice = Dice.new weapon['damage']
     @finesse = weapon['finesse']
     @ranged = weapon['ranged']
+    @range = weapon['range'] || 5
   end
 
   private

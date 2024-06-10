@@ -1,7 +1,7 @@
 require_relative 'target_value'
 
 class Action
-  attr_reader :character, :evaluated_targets, :target
+  attr_reader :character, :evaluated_targets, :range, :target
 
   def initialize character
     @character = character
@@ -12,7 +12,7 @@ class Action
     # implement in action
   end
 
-  def evalaute
+  def evaluate
     @evaluated_targets = evaluate_targets
     evaluated_targets.map(&:value).max
   end
@@ -28,7 +28,7 @@ class Action
   end
 
   def valid_targets
-    character.foes.reject(&:dead)
+    character.valid_foes range
   end
 
   def evaluate_targets

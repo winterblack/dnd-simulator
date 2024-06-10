@@ -34,18 +34,22 @@ spear:
 light crossbow:
   damage: 1d8
   ranged: true
+  range: 80
 
 dart:
   damage: 1d4
   ranged: true
+  range: 20
 
 shortbow:
   damage: 1d6
   ranged: true
+  range: 80
 
 sling:
   damage: 1d4
   ranged: true
+  range: 30
 
 # martial weapons
 
@@ -110,15 +114,19 @@ whip:
 blowgun:
   damage: 1d1
   ranged: true
+  range: 25
 
 hand crossbow:
   damage: 1d6
   ranged: true
+  range: 30
 
 heavy crossbow:
   damage: 1d10
   ranged: true
+  range: 100
 
 longbow:
   damage: 1d8
   ranged: true
+  range: 150
