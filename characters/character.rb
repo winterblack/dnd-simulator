@@ -30,6 +30,7 @@ class Character
   end
 
   def take_turn
+    start_turn
     choose_action.perform
   end
 
@@ -43,6 +44,10 @@ class Character
   end
 
   private
+
+  def start_turn
+    @has_reaction = true
+  end
 
   def living_foes
     foes.reject(&:dead)

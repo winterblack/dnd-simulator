@@ -4,7 +4,7 @@ require_relative 'action'
 class Attack < Action
   def perform
     super
-    attack target
+    attack target unless character.dead
   end
 
   def attack target

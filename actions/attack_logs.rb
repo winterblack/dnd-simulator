@@ -1,9 +1,9 @@
-module AttackLogs
-  private
+require_relative '../logs'
 
-  def log message
-    p message if $VERBOSE
-  end
+module AttackLogs
+  include Logs
+
+  private
 
   def move_into_position
     log "#{attacker} moves #{@movement} feet to attack #{defender}" if @movement > 0

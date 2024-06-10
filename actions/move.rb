@@ -16,12 +16,8 @@ module Move
     character.movement_into_position target, range
   end
 
-  def destination
-    character.position + movement_into_position
-  end
-
   def evaluate_risk
-    character.evaluate_risk(destination)
+    character.evaluate_risk(movement_into_position)
   end
 
   def evaluate_target target

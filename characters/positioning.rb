@@ -1,5 +1,18 @@
+require_relative 'positioning_logs'
+
 module Positioning
-  attr_reader :dashing, :position
+  prepend PositioningLogs
+
+  attr_reader :dashing
+  attr_accessor :position
+
+  def opportunity_attack foe
+    return if foe.dead
+
+    weapon.attack foe
+    foe.position = position if foe.dead
+    @has_reaction = false
+  end
 
   def dash movement
     @dashing = true
@@ -12,15 +25,17 @@ module Positioning
   end
 
   def move movement
-    @position += limit_speed(movement)
+    movement = limit_speed(movement)
+    provoke_opportunity_attacks(destination_of(movement))
+    @position += movement
   end
 
   def movement_into_position target, range
     direction_to(target) * (distance_to(target) - range)
   end
 
-  def evaluate_risk destination
-    evaluate_threats(destination).sum
+  def evaluate_risk movement
+    evaluate_threats(destination_of(movement)).sum
   end
 
   def valid_foes range
@@ -28,6 +43,12 @@ module Positioning
   end
 
   private
+
+  def provoke_opportunity_attacks destination
+    foes_in_path_of(destination).each do |foe|
+      foe.opportunity_attack self
+    end
+  end
 
   def melee_foes
     living_foes.reject { |foe| foe.weapon.ranged }
@@ -47,14 +68,18 @@ module Positioning
     end
   end
 
+  def evaluate_threat foe
+    foe.weapon.evaluate_target self
+  end
+
   def foes_in_path_of destination
     foes_in_direction_of(destination).select do |foe|
       (foe.position - destination).abs > foe.weapon.range
     end
   end
 
-  def evaluate_threat foe
-    foe.weapon.evaluate_target self
+  def destination_of movement
+    position + movement
   end
 
   def evaluate_threats destination
