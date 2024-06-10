@@ -1,14 +1,26 @@
 module Positioning
   attr_reader :dashing, :position
 
-  def dash_forward
+  def dash movement
     @dashing = true
-    move_into_position(nearest_foe, weapon.range)
+    move movement
     @dashing = false
   end
 
-  def move_into_position target, range
-    move(movement_into_position(target, range))
+  def nearest_foe
+    living_foes.min_by { |foe| distance_to(foe) }
+  end
+
+  def move movement
+    @position += limit_speed(movement)
+  end
+
+  def movement_into_position target, range
+    direction_to(target) * (distance_to(target) - range)
+  end
+
+  def evaluate_risk destination
+    evaluate_threats(destination).sum
   end
 
   def valid_foes range
@@ -17,25 +29,43 @@ module Positioning
 
   private
 
-  def nearest_foe
-    living_foes.min_by { |foe| distance_to foe }
+  def melee_foes
+    living_foes.reject { |foe| foe.weapon.ranged }
   end
 
-  def movement_into_position target, range
-    distance = distance_to(target) - weapon.range
-    direction = direction_to target
-    limit_speed(distance * direction)
+  def threatening_foes
+    melee_foes.select { |foe| foe.has_reaction }
   end
 
-  def limit_speed displacement
-    distance = distance_of displacement
-    direction = direction_of displacement
+  def within_reach_of foe
+    distance_to(foe) <= foe.weapon.range
+  end
+
+  def foes_in_direction_of destination
+    threatening_foes.select do |foe|
+      direction_to(foe) == direction_of(destination) || within_reach_of(foe)
+    end
+  end
+
+  def foes_in_path_of destination
+    foes_in_direction_of(destination).select do |foe|
+      (foe.position - destination).abs > foe.weapon.range
+    end
+  end
+
+  def evaluate_threat foe
+    foe.weapon.evaluate_target self
+  end
+
+  def evaluate_threats destination
+    foes_in_path_of(destination).map { |foe| evaluate_threat(foe) }
+  end
+
+  def limit_speed movement
+    distance = distance_of movement
+    direction = direction_of movement
     max_distance = dashing ? speed * 2 : speed
     distance > max_distance ? max_distance * direction : distance * direction
-  end
-
-  def move displacement
-    @position += displacement
   end
 
   def displacement_to target

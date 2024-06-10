@@ -10,7 +10,8 @@ class Character
   attr_accessor :foes
   attr_reader :str, :dex, :con, :int, :wis, :cha,
               :ac, :hp, :level, :name, :speed, :weapon,
-              :current_hp, :dead, :initiative, :position, :proficiency_bonus
+              :current_hp, :dead, :has_reaction, :initiative, :position,
+              :proficiency_bonus
 
   def initialize character
     @str = Attribute.new character['str']
@@ -25,6 +26,7 @@ class Character
     @proficiency_bonus = 2 + (level - 1) / 4
     @speed = character['speed']
     @weapon = Weapon.new self, character['weapon']
+    @has_reaction = true
   end
 
   def take_turn
@@ -57,6 +59,6 @@ class Character
   end
 
   def inspect
-    "<#{name} ac:#{ac} hp:#{current_hp}/#{hp}>"
+    "<#{name} ac:#{ac} hp:#{current_hp}/#{hp} position:#{position}>"
   end
 end

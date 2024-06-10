@@ -12,6 +12,11 @@ class Attack < Action
     roll_to_hit ? hit : miss
   end
 
+  def evaluate_target target
+    @target = target
+    hit_chance * evaluate_damage
+  end
+
   private
 
   def average_damage
@@ -24,11 +29,6 @@ class Attack < Action
 
   def hit_chance
     (21 - target.ac + to_hit_bonus) / 20.0
-  end
-
-  def evaluate_target target
-    @target = target
-    hit_chance * evaluate_damage
   end
 
   def damage_dice

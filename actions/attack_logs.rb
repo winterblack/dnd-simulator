@@ -5,6 +5,10 @@ module AttackLogs
     p message if $VERBOSE
   end
 
+  def move_into_position
+    log "#{attacker} moves #{@movement} feet to attack #{defender}" if @movement > 0
+  end
+
   def miss
     log "#{attacker} misses #{defender} with #{name}"
   end
