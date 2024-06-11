@@ -1,19 +1,7 @@
-require 'pry'
+require_relative '../../dice'
 
 module SneakAttack
   private
-
-  def roll_sneak_attack_damage
-    sneaking? ? sneak_attack_dice.roll : 0
-  end
-
-  def roll_damage
-    @damage = super + roll_sneak_attack_damage
-  end
-
-  def sneak_attack_dice
-    Dice.new "#{(character.level + 1) / 2}d6"
-  end
 
   def sneaking?
     return false if advantage_disadvantage == :disadvantage
@@ -21,11 +9,15 @@ module SneakAttack
     advantage_disadvantage == :advantage || target.close_combat?
   end
 
-  def average_sneak_attack_damage
-    sneaking? ? sneak_attack_dice.average : 0
+  def dice_count
+    sneaking? ? (character.level + 1) / 2 : 0
   end
 
-  def average_damage
-    super + average_sneak_attack_damage
+  def sneak_attack_dice
+    Dice.new "#{dice_count}d6"
+  end
+
+  def damage_dice
+    MixedDice.new([@damage_dice, sneak_attack_dice])
   end
 end

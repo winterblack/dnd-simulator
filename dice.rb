@@ -11,8 +11,8 @@ class Dice
     count.times.collect { rand 1..type }.sum
   end
 
-  def average
-    count * (type + 1) / 2.0
+  def average current_hp, bonus = 0
+    MixedDice.new([self]).average(current_hp, bonus)
   end
 end
 
@@ -26,5 +26,33 @@ class D20
     else
       rand 1..20
     end
+  end
+end
+
+class MixedDice
+  attr_reader :dice
+
+  def initialize dice
+    @dice = dice
+  end
+
+  def roll
+    dice.sum(&:roll)
+  end
+
+  def average current_hp, bonus
+    dice_map = dice.flat_map { |die| Array.new(die.count) { (1..die.type) } }
+    addends = dice_map.pop.to_a
+    until dice_map.empty?
+      previous = addends
+      addends = []
+      die = dice_map.pop.to_a
+      die.each do |roll|
+        previous.each do |addend|
+          addends << [roll + addend + bonus, current_hp].min
+        end
+      end
+    end
+    addends.sum / addends.count.to_f
   end
 end

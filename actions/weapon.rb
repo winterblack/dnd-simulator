@@ -23,7 +23,7 @@ class Weapon < Attack
   private
 
   def average_damage
-    super + ability_bonus
+    damage_dice.average target.current_hp, ability_bonus
   end
 
   def roll_damage

@@ -23,11 +23,11 @@ class Attack < Action
   end
 
   def average_damage
-    damage_dice.average
+    damage_dice.average target.current_hp
   end
 
   def evaluate_damage
-    [average_damage / target.current_hp, 1].min
+    average_damage / target.current_hp
   end
 
   def hit_chance
