@@ -19,6 +19,9 @@ class Attack < Action
 
   private
 
+  def advantage_disadvantage
+  end
+
   def average_damage
     damage_dice.average
   end
@@ -28,7 +31,11 @@ class Attack < Action
   end
 
   def hit_chance
-    (21 - target.ac + to_hit_bonus) / 20.0
+    chance = (21 - target.ac + to_hit_bonus) / 20.0
+    return chance**2 if advantage_disadvantage == :disadvantage
+    return 1 - (1 - chance)**2 if advantage_disadvantage == :advantage
+
+    chance
   end
 
   def damage_dice
@@ -56,7 +63,7 @@ class Attack < Action
   end
 
   def attack_roll
-    D20.roll + to_hit_bonus
+    D20.roll(advantage_disadvantage) + to_hit_bonus
   end
 
   def roll_to_hit

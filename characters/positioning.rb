@@ -6,6 +6,10 @@ module Positioning
   attr_reader :dashing
   attr_accessor :position
 
+  def foes_within_radius_of position, radius
+    living_foes.select { |foe| distance_between(foe, position) <= radius }
+  end
+
   def opportunity_attack foe
     return if foe.dead
 
@@ -34,8 +38,8 @@ module Positioning
     direction_to(target) * (distance_to(target) - range)
   end
 
-  def evaluate_risk movement
-    evaluate_threats(destination_of(movement)).sum
+  def evaluate_risk destination
+    evaluate_threats(destination).sum
   end
 
   def valid_foes range
@@ -43,6 +47,10 @@ module Positioning
   end
 
   private
+
+  def distance_between character, position
+    (character.position - position).abs
+  end
 
   def provoke_opportunity_attacks destination
     foes_in_path_of(destination).each do |foe|

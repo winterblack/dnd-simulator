@@ -55,7 +55,7 @@ class Character
 
   def actions
     dash = Dash.new self
-    move_attack = weapon.dup.extend Move
+    move_attack = weapon.clone.extend Move
     [dash, move_attack, weapon]
   end
 

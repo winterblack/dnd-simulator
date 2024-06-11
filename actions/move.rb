@@ -1,10 +1,16 @@
 module Move
+  attr_reader :destination
+
   def perform
     move_into_position
     super
   end
 
   private
+
+  def destination
+    character.position + movement_into_position
+  end
 
   def move_into_position
     @movement = movement_into_position
@@ -17,7 +23,7 @@ module Move
   end
 
   def evaluate_risk
-    character.evaluate_risk(movement_into_position)
+    character.evaluate_risk(destination)
   end
 
   def evaluate_target target

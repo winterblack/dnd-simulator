@@ -1,6 +1,7 @@
 require_relative '../dice'
 require_relative 'attack'
 require_relative 'attack_logs'
+require_relative 'ranged_attack'
 
 class Weapon < Attack
   prepend AttackLogs
@@ -16,6 +17,7 @@ class Weapon < Attack
     @finesse = weapon['finesse']
     @ranged = weapon['ranged']
     @range = weapon['range'] || 5
+    extend RangedAttack if ranged
   end
 
   private
