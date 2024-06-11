@@ -6,6 +6,10 @@ module Positioning
   attr_reader :dashing
   attr_accessor :position
 
+  def close_combat?
+    foes_within_radius_of(position, 5).any?
+  end
+
   def foes_within_radius_of position, radius
     living_foes.select { |foe| distance_between(foe, position) <= radius }
   end

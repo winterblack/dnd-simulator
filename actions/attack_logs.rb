@@ -5,6 +5,13 @@ module AttackLogs
 
   private
 
+  def sneaking?
+  end
+
+  def sneak_attacks?
+    sneaking? ? 'sneak attacks' : 'hits'
+  end
+
   def move_into_position
     log "#{attacker} moves #{@movement} feet to attack #{defender}" if @movement > 0
   end
@@ -19,7 +26,7 @@ module AttackLogs
 
   def hit
     super
-    log "#{attacker} hits #{defender} with #{name} for #{@damage} damage"
+    log "#{attacker} #{sneak_attacks?} #{defender} with #{name} for #{@damage} damage"
   end
 
   def name
