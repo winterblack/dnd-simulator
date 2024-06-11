@@ -1,20 +1,20 @@
 require_relative 'target_value'
 
 class Action
-  attr_reader :character, :evaluated_targets, :range, :target
+  attr_reader :character, :range, :target
 
   def initialize character
     @character = character
   end
 
   def perform
-    @target = choose_target
     # implement in action
   end
 
   def evaluate
-    @evaluated_targets = evaluate_targets
-    evaluated_targets.map(&:value).max
+    target_value = evaluate_targets.max_by(&:value)
+    @target = target_value.target
+    target_value.value
   end
 
   def valid?
@@ -35,9 +35,5 @@ class Action
     valid_targets.map do |target|
       TargetValue.new(target, evaluate_target(target))
     end
-  end
-
-  def choose_target
-    evaluated_targets.max_by(&:value).target
   end
 end
