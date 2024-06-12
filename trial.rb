@@ -1,6 +1,7 @@
 require 'yaml'
 require_relative 'characters/player_character'
 require_relative 'characters/rogue/rogue'
+require_relative 'characters/fighter/fighter'
 
 class Trial
   attr_reader :count, :outcomes, :party, :scenario
@@ -47,6 +48,7 @@ class Trial
     party.map do |character|
       case character
       when 'rogue' then Rogue.new(Characters[character])
+      when 'fighter' then Fighter.new(Characters[character])
       else PlayerCharacter.new(Characters[character])
       end
     end

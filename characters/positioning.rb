@@ -1,8 +1,4 @@
-require_relative 'positioning_logs'
-
 module Positioning
-  prepend PositioningLogs
-
   attr_reader :dashing
   attr_accessor :position
 

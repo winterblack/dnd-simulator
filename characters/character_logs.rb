@@ -1,7 +1,12 @@
 require_relative '../logs'
 
-module PositioningLogs
+module CharacterLogs
   include Logs
+
+  def heal healing
+    super healing
+    log "#{name} heals for #{@healing}. HP: #{current_hp}/#{hp}"
+  end
 
   def opportunity_attack foe
     log "#{name} makes an opportunity attack against #{foe.name}" unless foe.dead

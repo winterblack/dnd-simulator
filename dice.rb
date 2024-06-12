@@ -11,8 +11,8 @@ class Dice
     count.times.collect { rand 1..type }.sum
   end
 
-  def average current_hp, bonus = 0
-    MixedDice.new([self]).average(current_hp, bonus)
+  def average limit, bonus = 0
+    MixedDice.new([self]).average(limit, bonus)
   end
 end
 
@@ -40,19 +40,21 @@ class MixedDice
     dice.sum(&:roll)
   end
 
-  def average current_hp, bonus
+  def average limit, bonus
     dice_map = dice.flat_map { |die| Array.new(die.count) { (1..die.type) } }
-    addends = dice_map.pop.to_a
+    addends = [0]
+
     until dice_map.empty?
       previous = addends
       addends = []
       die = dice_map.pop.to_a
       die.each do |roll|
         previous.each do |addend|
-          addends << [roll + addend + bonus, current_hp].min
+          addends << [roll + addend + bonus, limit].min
         end
       end
     end
+
     addends.sum / addends.count.to_f
   end
 end
